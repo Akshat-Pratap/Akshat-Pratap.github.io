@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0a08;
+  --color-coal: #14110d;
+  --color-smoke: #1e1a15;
+  --color-bone: #ece7df;
+  --color-ash: #97907f;
+  --color-ember: #ff5e1f;
+  --color-glow: #ffb25e;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee-left: marquee-left 38s linear infinite;
+  --animate-marquee-right: marquee-right 44s linear infinite;
+  --animate-drift-a: drift-a 20s ease-in-out infinite alternate;
+  --animate-drift-b: drift-b 26s ease-in-out infinite alternate;
+  --animate-spin-slow: spin-slow 18s linear infinite;
+  --animate-bounce-soft: bounce-soft 2.2s ease-in-out infinite;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+  --animate-bat-flap: bat-flap 0.55s ease-in-out infinite;
+  --animate-bat-flap-fast: bat-flap 0.24s ease-in-out infinite;
+
+  @keyframes marquee-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes marquee-right {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes drift-a {
+    from {
+      transform: translate3d(-8%, -6%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(10%, 8%, 0) scale(1.25);
+    }
+  }
+  @keyframes drift-b {
+    from {
+      transform: translate3d(8%, 10%, 0) scale(1.2);
+    }
+    to {
+      transform: translate3d(-10%, -8%, 0) scale(0.95);
+    }
+  }
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes bounce-soft {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 0 0 rgba(255, 94, 31, 0.5);
+    }
+    50% {
+      opacity: 0.75;
+      box-shadow: 0 0 0 6px rgba(255, 94, 31, 0);
+    }
+  }
+  @keyframes bat-flap {
+    0%,
+    100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.66);
+    }
+  }
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-smoke) var(--color-ink);
+}
+
+body {
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-smoke);
+  border-radius: 99px;
+}
+
+@media (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(236, 231, 223, 0.4);
+}
+
+.text-gradient-ember {
+  background: linear-gradient(
+    100deg,
+    var(--color-ember),
+    var(--color-glow)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(236, 231, 223, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236, 231, 223, 0.04) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.mask-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+.marquee-track:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
