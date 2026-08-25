@@ -71,6 +71,7 @@ export type Project = {
   tech: string[];
   github: string;
   live?: string;
+  preview?: string;
   gradient: string;
   icon: "sparkles" | "messages" | "leaf";
 };
@@ -85,6 +86,7 @@ export const projects: Project[] = [
     tech: ["React", "FastAPI", "Gemini API", "SQLite"],
     github: "https://github.com/Akshat-Pratap/venture-insight",
     live: "https://venture-insight.vercel.app",
+    preview: "/projects/venture-insight.png",
     gradient: "from-orange-600 via-red-500 to-rose-500",
     icon: "sparkles",
   },
@@ -97,6 +99,7 @@ export const projects: Project[] = [
     tech: ["React", "FastAPI", "Gemini API", "Agentic AI"],
     github: "https://github.com/Akshat-Pratap/SkillSync-frontend",
     live: "https://skill-sync-frontend-umber.vercel.app",
+    preview: "/projects/skillsync-ai.png",
     gradient: "from-amber-500 via-orange-500 to-yellow-400",
     icon: "messages",
   },
@@ -109,6 +112,7 @@ export const projects: Project[] = [
     tech: ["HTML", "CSS", "JavaScript"],
     github: "https://github.com/Akshat-Pratap/the-last-garden",
     live: "https://the-last-garden.vercel.app",
+    preview: "/projects/the-last-garden.png",
     gradient: "from-emerald-600 via-green-500 to-lime-400",
     icon: "leaf",
   },

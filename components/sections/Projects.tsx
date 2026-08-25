@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Leaf, MessagesSquare, Sparkles } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useLoaded } from "@/components/LoaderProvider";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -10,46 +11,86 @@ import FadeIn from "@/components/ui/FadeIn";
 import TiltCard from "@/components/ui/TiltCard";
 import { projects, type Project } from "@/content/data";
 
-const icons = {
-  sparkles: Sparkles,
-  messages: MessagesSquare,
-  leaf: Leaf,
-};
+function ProjectVisual({ project }: { project: Project }) {
+  const [livePreview, setLivePreview] = useState(false);
+  const domain = project.live
+    ? new URL(project.live).hostname
+    : new URL(project.github).hostname;
 
-function ProjectCard({ project }: { project: Project }) {
-  const Icon = icons[project.icon];
   return (
-    <TiltCard className="w-full shrink-0 md:w-[68vw] lg:w-[42vw] lg:max-w-[640px]">
-      <article data-cursor>
-        <div
-          className={`relative aspect-[16/10] select-none overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br ${project.gradient}`}
-        >
+    <div
+      className={`relative aspect-[16/10] select-none overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br ${project.gradient}`}
+      onMouseEnter={() => setLivePreview(true)}
+      onMouseLeave={() => setLivePreview(false)}
+    >
+      {project.preview ? (
+        <Image
+          src={project.preview}
+          alt={`${project.title} — live site preview`}
+          fill
+          sizes="(max-width: 768px) 90vw, 42vw"
+          className="object-cover object-top"
+        />
+      ) : (
+        <>
           <div className="grid-lines absolute inset-0 opacity-40" />
           <span className="absolute -bottom-8 right-1 font-display text-[10rem] font-bold leading-none text-white/15">
             {project.index}
           </span>
+        </>
+      )}
 
-          <div className="absolute left-6 top-6 flex h-12 w-12 items-center justify-center rounded-xl bg-black/25 backdrop-blur-sm">
-            <Icon size={22} className="text-white" />
-          </div>
+      {project.live && livePreview && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="absolute inset-0 overflow-hidden"
+        >
+          <iframe
+            src={project.live}
+            title={`${project.title} — live preview`}
+            className="absolute left-0 top-0 h-[200%] w-[200%] origin-top-left scale-50 border-0"
+            style={{ pointerEvents: "none" }}
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          />
+        </motion.div>
+      )}
 
-          {project.live && (
-            <span className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-black/30 px-3 py-1 text-[11px] font-medium tracking-wider text-white backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-emerald-300" />
-              LIVE
-            </span>
-          )}
+      {/* browser chrome bar */}
+      <div className="absolute inset-x-0 top-0 z-10 flex items-center gap-2 border-b border-white/10 bg-black/50 px-4 py-2 backdrop-blur-md">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+        <span className="ml-2 truncate rounded-full bg-white/10 px-3 py-0.5 font-mono text-[10px] text-bone/80">
+          {domain}
+        </span>
+        {project.live && (
+          <span className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-0.5 text-[10px] font-medium tracking-wider text-emerald-300">
+            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-emerald-300" />
+            LIVE PREVIEW
+          </span>
+        )}
+      </div>
 
-          <a
-            href={project.live ?? project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${project.title}`}
-            className="absolute bottom-5 right-5 flex h-12 w-12 translate-y-3 items-center justify-center rounded-full bg-ink text-bone opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-          >
-            <ArrowUpRight size={20} />
-          </a>
-        </div>
+      <a
+        href={project.live ?? project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${project.title}`}
+        className="absolute bottom-5 right-5 z-10 flex h-12 w-12 translate-y-3 items-center justify-center rounded-full bg-ink text-bone opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+      >
+        <ArrowUpRight size={20} />
+      </a>
+    </div>
+  );
+}
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <TiltCard className="w-full shrink-0 md:w-[68vw] lg:w-[42vw] lg:max-w-[640px]">
+      <article data-cursor>
+        <ProjectVisual project={project} />
 
         <div className="mt-6">
           <div className="flex items-baseline justify-between gap-4">
