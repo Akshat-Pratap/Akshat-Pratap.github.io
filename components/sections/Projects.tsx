@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Leaf, MessagesSquare, Sparkles } from "lucide-react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useLoaded } from "@/components/LoaderProvider";
@@ -160,7 +161,8 @@ export default function Projects() {
       </div>
 
       <div ref={wrapRef} className="relative">
-        <div className="lg:flex lg:h-screen lg:flex-col lg:justify-center lg:overflow-hidden">
+        <div className="lg:flex lg:h-screen lg:flex-col lg:overflow-hidden">
+          <div className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col lg:justify-center">
           <div
             ref={trackRef}
             className="flex flex-col gap-20 px-6 pb-6 lg:w-max lg:flex-row lg:items-center lg:gap-[5vw] lg:px-[8vw] lg:pb-0"
@@ -184,19 +186,43 @@ export default function Projects() {
               </FadeIn>
             ))}
           </div>
+          </div>
 
-          <div className="pointer-events-none absolute inset-x-[8vw] bottom-10 hidden lg:block">
-            <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-ash">
-              <span>Scroll to explore</span>
-              <span className="tabular-nums">
+          <div className="hidden shrink-0 lg:block px-[8vw] pb-7 pt-4">
+            <div className="mb-3 flex items-end justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <span className="relative flex h-11 w-7 shrink-0 items-start justify-center rounded-full border border-white/30 pt-2">
+                  <motion.span
+                    className="h-2 w-1 rounded-full bg-gradient-to-b from-ember to-glow"
+                    animate={{ y: [0, 18], opacity: [1, 1, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeIn",
+                    }}
+                  />
+                </span>
+                <div>
+                  <p className="font-display text-sm font-medium tracking-[0.25em] text-bone">
+                    SCROLL TO EXPLORE
+                  </p>
+                  <p className="mt-1 text-xs text-ash">
+                    Keep scrolling — the deck slides sideways for you
+                  </p>
+                </div>
+              </div>
+              <span className="font-display text-sm tabular-nums tracking-wider text-glow">
                 {String(currentIdx).padStart(2, "0")} /{" "}
                 {String(projects.length).padStart(2, "0")}
               </span>
             </div>
-            <div className="h-px bg-white/10">
+            <div className="h-[3px] overflow-hidden rounded-full bg-white/10">
               <div
-                className="h-full origin-left bg-gradient-to-r from-ember to-glow"
-                style={{ transform: `scaleX(${Math.max(progress, 0.02)})` }}
+                className="h-full w-full origin-left rounded-full bg-gradient-to-r from-ember to-glow"
+                style={{
+                  transform: `scaleX(${Math.max(progress, 0.02)})`,
+                  transition: "transform 0.15s linear",
+                }}
               />
             </div>
           </div>
