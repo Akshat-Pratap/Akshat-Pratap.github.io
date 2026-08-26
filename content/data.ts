@@ -124,7 +124,15 @@ export const skillRows: string[][] = [
   ["AWS", "Oracle Cloud", "Git & GitHub", "Vercel", "Tailwind CSS", "OOPS"],
 ];
 
-export const achievements = [
+export type Achievement = {
+  icon: string;
+  title: string;
+  detail: string;
+  tag: string;
+  flipImage?: string;
+};
+
+export const achievements: Achievement[] = [
   {
     icon: "cloud",
     title: "OCI Generative AI Certified",
@@ -159,5 +167,6 @@ export const achievements = [
     detail:
       "125+ problems solved in C++ and Python, earned the 100-day consistency badge.",
     tag: "DSA",
+    flipImage: "/achievements/leetcode-badge.png",
   },
 ];

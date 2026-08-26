@@ -120,6 +120,10 @@ body {
   body.has-custom-cursor * {
     cursor: none !important;
   }
+  body.has-custom-cursor .badge-modal-open,
+  body.has-custom-cursor .badge-modal-open * {
+    cursor: default !important;
+  }
 }
 
 .noise-overlay {
