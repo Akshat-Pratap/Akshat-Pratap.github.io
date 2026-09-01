@@ -2,10 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import dynamic from "next/dynamic";
 import SectionHeading from "@/components/ui/SectionHeading";
 import FadeIn from "@/components/ui/FadeIn";
 import StatCounter from "@/components/ui/StatCounter";
 import { profile, stats } from "@/content/data";
+
+const WavingAvatar = dynamic(() => import("@/components/ui/WavingAvatar"), {
+  ssr: false,
+  loading: () => <div className="h-[360px] w-[280px] lg:h-[420px] lg:w-[320px] animate-pulse rounded-3xl bg-white/5" />,
+});
 
 export default function About() {
   const pRef = useRef<HTMLParagraphElement>(null);
@@ -47,14 +53,8 @@ export default function About() {
           ))}
         </p>
 
-        <FadeIn delay={0.15} className="self-center lg:mt-2 lg:self-start">
-          <div className="relative h-44 w-44">
-            <div className="absolute -inset-3 animate-spin-slow rounded-full border border-dashed border-ember/40" />
-            <div className="flex h-full w-full items-center justify-center rounded-full border border-white/10 bg-coal font-display text-5xl font-bold shadow-[0_0_80px_rgba(255,94,31,0.18)]">
-              <span className="text-gradient-ember">AP</span>
-            </div>
-            <span className="absolute right-3 top-3 h-2.5 w-2.5 animate-pulse-dot rounded-full bg-ember" />
-          </div>
+        <FadeIn delay={0.15} className="self-center lg:mt-0 lg:self-start lg:ml-auto">
+          <WavingAvatar src="/models/waving-gesture.glb" />
         </FadeIn>
       </div>
 
