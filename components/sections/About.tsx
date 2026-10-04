@@ -53,7 +53,7 @@ export default function About() {
           ))}
         </p>
 
-        <FadeIn delay={0.15} className="self-center lg:mt-0 lg:self-start lg:ml-auto">
+        <FadeIn delay={0.15} className="self-center lg:mt-0 lg:self-start lg:ml-auto lg:mr-[-64px] xl:mr-[-96px] lg:translate-x-8">
           <WavingAvatar src="/models/waving-gesture.glb" />
         </FadeIn>
       </div>

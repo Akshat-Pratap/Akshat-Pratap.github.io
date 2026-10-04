@@ -61,7 +61,7 @@ function Model({ src }: { src: string }) {
 
 export default function WavingAvatar({ src = "/models/waving-gesture.glb" }: { src?: string }) {
   return (
-    <div className="relative h-[520px] w-full max-w-[560px] lg:h-[560px] lg:w-[640px] lg:max-w-[640px] translate-x-4 lg:translate-x-8 bg-transparent">
+    <div className="relative h-[520px] w-full max-w-[600px] lg:h-[560px] lg:w-[700px] lg:max-w-[700px] translate-x-6 lg:translate-x-12 bg-transparent">
       <Canvas
         camera={{ position: [0, 1.75, 17.5], fov: 36, near: 0.1, far: 50 }}
         shadows
